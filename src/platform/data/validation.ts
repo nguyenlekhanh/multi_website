@@ -99,6 +99,16 @@ export function validateBrandColors(value: unknown, field: string): BrandColors 
   return out;
 }
 
+/** Site-relative path or https URL — anything else (javascript:, data:, ...)
+ *  is rejected so references stored here are always safe to render. */
+export function validateSafeReference(value: unknown, field: string): string | undefined {
+  const v = str(value, field, { optional: true });
+  if (v === undefined) return undefined;
+  if (v.startsWith('/') && !v.startsWith('//')) return v;
+  if (/^https:\/\//.test(v)) return v;
+  throw new ValidationError(`${field} must be a site-relative path or an https:// URL`);
+}
+
 export function validateSiteIdentity(value: unknown, field: string): SiteIdentity {
   if (!isObject(value)) throw new ValidationError(`${field} must be an object`);
   return {
@@ -106,6 +116,8 @@ export function validateSiteIdentity(value: unknown, field: string): SiteIdentit
     tagline: str(value.tagline, `${field}.tagline`),
     logoText: str(value.logoText, `${field}.logoText`),
     logoInitials: str(value.logoInitials, `${field}.logoInitials`),
+    logoUrl: validateSafeReference(value.logoUrl, `${field}.logoUrl`),
+    faviconUrl: validateSafeReference(value.faviconUrl, `${field}.faviconUrl`),
   };
 }
 

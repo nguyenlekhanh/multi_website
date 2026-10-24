@@ -116,6 +116,7 @@ export function TravelPostView({
   ctx: SiteContext;
   post: Post;
   related: Post[];
+  categories?: CategoryWithCount[];
 }) {
   return (
     <>

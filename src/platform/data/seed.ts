@@ -5,6 +5,13 @@ import type {
   Post,
   Site,
 } from '../types';
+import {
+  phase5Authors,
+  phase5Categories,
+  phase5Pages,
+  phase5Posts,
+  phase5Sites,
+} from './seed-phase5';
 
 /**
  * Typed seed dataset for the MVP.
@@ -16,7 +23,7 @@ import type {
 
 /* ================================ Sites ================================== */
 
-export const seedSites: Site[] = [
+const baseSeedSites: Site[] = [
   {
     id: 'business-demo',
     name: 'Meridian Consulting',
@@ -176,7 +183,7 @@ export const seedSites: Site[] = [
 
 /* ================================ Pages ================================== */
 
-export const seedPages: Page[] = [
+const baseSeedPages: Page[] = [
   /* ------------------------------ Business ------------------------------ */
   {
     siteId: 'business-demo',
@@ -913,7 +920,7 @@ export const seedPages: Page[] = [
 
 /* ============================== Categories =============================== */
 
-export const seedCategories: Category[] = [
+const baseSeedCategories: Category[] = [
   // Business
   { siteId: 'business-demo', id: 'cat-strategy', slug: 'strategy', name: 'Strategy' },
   { siteId: 'business-demo', id: 'cat-leadership', slug: 'leadership', name: 'Leadership' },
@@ -930,7 +937,7 @@ export const seedCategories: Category[] = [
 
 /* =============================== Authors ================================= */
 
-export const seedAuthors: Record<string, Author> = {
+const baseSeedAuthors: Record<string, Author> = {
   'business-demo:elena-voss': {
     id: 'elena-voss',
     name: 'Elena Voss',
@@ -998,7 +1005,7 @@ export const seedAuthors: Record<string, Author> = {
 
 /* ================================= Posts ================================= */
 
-export const seedPosts: Post[] = [
+const baseSeedPosts: Post[] = [
   /* ------------------------------ Business ------------------------------ */
   {
     siteId: 'business-demo',
@@ -1015,7 +1022,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/business/post-strategy.jpg',
     coverAlt: 'Analyst reviewing charts on a laptop',
     categoryId: 'cat-strategy',
-    author: seedAuthors['business-demo:elena-voss'],
+    author: baseSeedAuthors['business-demo:elena-voss'],
     publishedAt: '2026-09-24T08:00:00.000Z',
     readingMinutes: 6,
     featured: true,
@@ -1034,7 +1041,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/business/post-leadership.jpg',
     coverAlt: 'Leadership team working together at a table',
     categoryId: 'cat-leadership',
-    author: seedAuthors['business-demo:marcus-hale'],
+    author: baseSeedAuthors['business-demo:marcus-hale'],
     publishedAt: '2026-09-10T08:00:00.000Z',
     readingMinutes: 5,
   },
@@ -1052,7 +1059,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/business/post-market.jpg',
     coverAlt: 'Analytics dashboard on a screen',
     categoryId: 'cat-markets',
-    author: seedAuthors['business-demo:priya-nair'],
+    author: baseSeedAuthors['business-demo:priya-nair'],
     publishedAt: '2026-08-27T08:00:00.000Z',
     readingMinutes: 4,
   },
@@ -1073,7 +1080,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/travel/kyoto.jpg',
     coverAlt: 'Kyoto pagoda framed by cherry trees',
     categoryId: 'cat-destinations',
-    author: seedAuthors['travel-demo:amara-chen'],
+    author: baseSeedAuthors['travel-demo:amara-chen'],
     publishedAt: '2026-09-21T08:00:00.000Z',
     readingMinutes: 7,
     featured: true,
@@ -1093,7 +1100,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/travel/iceland.jpg',
     coverAlt: 'Braided glacial river in the Icelandic highlands',
     categoryId: 'cat-guides',
-    author: seedAuthors['travel-demo:tomas-rivera'],
+    author: baseSeedAuthors['travel-demo:tomas-rivera'],
     publishedAt: '2026-09-07T08:00:00.000Z',
     readingMinutes: 9,
   },
@@ -1111,7 +1118,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/travel/bali.jpg',
     coverAlt: 'Rice terraces in upcountry Bali',
     categoryId: 'cat-tips',
-    author: seedAuthors['travel-demo:june-park'],
+    author: baseSeedAuthors['travel-demo:june-park'],
     publishedAt: '2026-08-19T08:00:00.000Z',
     readingMinutes: 5,
   },
@@ -1129,7 +1136,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/travel/paris.jpg',
     coverAlt: 'Autumn light over Paris rooftops',
     categoryId: 'cat-guides',
-    author: seedAuthors['travel-demo:amara-chen'],
+    author: baseSeedAuthors['travel-demo:amara-chen'],
     publishedAt: '2026-08-05T08:00:00.000Z',
     readingMinutes: 6,
   },
@@ -1150,7 +1157,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/blog/news.jpg',
     coverAlt: 'Stacked newspapers awaiting readers',
     categoryId: 'cat-technology',
-    author: seedAuthors['blog-demo:naomi-okafor'],
+    author: baseSeedAuthors['blog-demo:naomi-okafor'],
     publishedAt: '2026-10-18T08:00:00.000Z',
     readingMinutes: 8,
     featured: true,
@@ -1170,7 +1177,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/blog/desk.jpg',
     coverAlt: 'A café table with coffee and a laptop pushed aside',
     categoryId: 'cat-culture',
-    author: seedAuthors['blog-demo:sofia-reyes'],
+    author: baseSeedAuthors['blog-demo:sofia-reyes'],
     publishedAt: '2026-10-11T08:00:00.000Z',
     readingMinutes: 4,
   },
@@ -1189,7 +1196,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/blog/library.jpg',
     coverAlt: 'A dim library with tall shelves',
     categoryId: 'cat-essays',
-    author: seedAuthors['blog-demo:david-lindqvist'],
+    author: baseSeedAuthors['blog-demo:david-lindqvist'],
     publishedAt: '2026-10-04T08:00:00.000Z',
     readingMinutes: 7,
   },
@@ -1207,7 +1214,7 @@ export const seedPosts: Post[] = [
     coverImage: '/images/blog/nook.jpg',
     coverAlt: 'A quiet reading nook with books and warm light',
     categoryId: 'cat-technology',
-    author: seedAuthors['blog-demo:david-lindqvist'],
+    author: baseSeedAuthors['blog-demo:david-lindqvist'],
     publishedAt: '2026-09-20T08:00:00.000Z',
     readingMinutes: 5,
   },
@@ -1223,7 +1230,7 @@ export const seedPosts: Post[] = [
       'The objections are always the same — deliveries, emergencies, commerce. The cities that tried it have the same answer: watch the ground floor. When a street becomes a place, the rents follow, the tax base follows, and the emergency vehicles move faster than they did on the widened road.',
     ],
     categoryId: 'cat-culture',
-    author: seedAuthors['blog-demo:sofia-reyes'],
+    author: baseSeedAuthors['blog-demo:sofia-reyes'],
     publishedAt: '2026-09-13T08:00:00.000Z',
     readingMinutes: 6,
   },
@@ -1241,8 +1248,22 @@ export const seedPosts: Post[] = [
     coverImage: '/images/blog/featured.jpg',
     coverAlt: 'An open book with pages mid-turn',
     categoryId: 'cat-essays',
-    author: seedAuthors['blog-demo:naomi-okafor'],
+    author: baseSeedAuthors['blog-demo:naomi-okafor'],
     publishedAt: '2026-08-30T08:00:00.000Z',
     readingMinutes: 3,
   },
 ];
+
+/* =========================== merged seed exports ========================== */
+/* The full demo dataset: the original three themes plus the Phase 5 theme
+ * library demos. The adapters read ONLY these merged exports, so both sets
+ * of fixtures are always in sync with one dataset. */
+
+export const seedSites: Site[] = [...baseSeedSites, ...phase5Sites];
+export const seedPages: Page[] = [...baseSeedPages, ...phase5Pages];
+export const seedCategories: Category[] = [...baseSeedCategories, ...phase5Categories];
+export const seedPosts: Post[] = [...baseSeedPosts, ...phase5Posts];
+export const seedAuthors: Record<string, Author> = {
+  ...baseSeedAuthors,
+  ...phase5Authors,
+};

@@ -83,7 +83,9 @@ describe.skipIf(!TEST_DATABASE_URL)('PostgresDataAdapter (integration)', () => {
 
   it('imports all three demo sites with domains and settings', async () => {
     const sites = await d.listSites();
-    expect(sites.map((s) => s.id).sort()).toEqual(['blog-demo', 'business-demo', 'travel-demo']);
+    expect(sites.map((s) => s.id).sort()).toEqual([
+      'agency-demo', 'blog-demo', 'business-demo', 'news-demo', 'portfolio-demo', 'tech-demo', 'travel-demo',
+    ]);
 
     const business = await d.getSite('business-demo');
     expect(business?.name).toBe('Meridian Consulting');
@@ -183,8 +185,8 @@ describe.skipIf(!TEST_DATABASE_URL)('PostgresDataAdapter (integration)', () => {
       media: await prisma.media.count(),
     };
     expect(after).toEqual(before);
-    expect(after.sites).toBe(3);
-    expect(after.posts).toBe(13);
+    expect(after.sites).toBe(7);
+    expect(after.posts).toBe(22);
   });
 
   it('persists active theme changes per site without touching others', async () => {

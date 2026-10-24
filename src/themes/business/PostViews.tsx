@@ -87,6 +87,7 @@ export function BusinessPostView({
   ctx: SiteContext;
   post: Post;
   related: Post[];
+  categories?: CategoryWithCount[];
 }) {
   return (
     <>

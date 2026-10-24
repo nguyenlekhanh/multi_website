@@ -28,6 +28,11 @@ enum ContentStatus {
   PUBLISHED
 }
 
+enum AdminRole {
+  SUPER_ADMIN
+  SITE_ADMIN
+}
+
 model Site {
   id        String     @id
   name      String
@@ -43,6 +48,7 @@ model Site {
   categories Category[]
   authors    Author[]
   media      Media[]
+  memberships SiteMembership[]
 
   @@map("sites")
 }
@@ -152,6 +158,8 @@ model Post {
   coverAlt       String?       @map("cover_alt")
   categoryId     String?       @map("category_id")
   authorId       String        @map("author_id")
+  seoTitle       String?       @map("seo_title")
+  seoDescription String?       @map("seo_description")
   status         ContentStatus @default(PUBLISHED)
   featured       Boolean       @default(false)
   readingMinutes Int           @default(5) @map("reading_minutes")
@@ -186,4 +194,64 @@ model Media {
   @@unique([siteId, src])
   @@index([siteId])
   @@map("media")
+}
+
+// ============================================================================
+// Administration: accounts, per-site grants, and the audit trail.
+// ============================================================================
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  /// bcrypt hash — plaintext passwords are never stored or logged
+  passwordHash String    @map("password_hash")
+  name         String
+  role         AdminRole @default(SITE_ADMIN)
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  memberships SiteMembership[]
+  auditLogs   AuditLog[]
+
+  @@map("admin_users")
+}
+
+/// Explicit grants: a SITE_ADMIN may manage exactly these sites.
+/// SUPER_ADMINs ignore this table (implicit access to everything).
+model SiteMembership {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  siteId    String   @map("site_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  site Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, siteId])
+  @@index([siteId])
+  @@map("site_memberships")
+}
+
+model AuditLog {
+  id           BigInt   @id @default(autoincrement())
+  /// SetNull: the log survives account deletion.
+  actorId      String?  @map("actor_id")
+  /// Denormalized snapshot so the trail stays readable after user deletion.
+  actorEmail   String   @map("actor_email")
+  action       String
+  /// Plain text, no FK: audit entries outlive deleted sites.
+  targetSiteId String?  @map("target_site_id")
+  summary      String
+  /// Optional structured details (never secrets).
+  metadata     Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  actor AdminUser? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([targetSiteId])
+  @@index([actorId])
+  @@map("audit_logs")
 }

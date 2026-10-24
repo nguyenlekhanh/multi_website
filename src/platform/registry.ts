@@ -1,7 +1,11 @@
 import type { ThemeDefinition } from './types';
-import { businessTheme } from '@/themes/business';
-import { travelTheme } from '@/themes/travel';
+import { agencyTheme } from '@/themes/agency';
 import { blogTheme } from '@/themes/blog';
+import { businessTheme } from '@/themes/business';
+import { itTheme } from '@/themes/it';
+import { newsTheme } from '@/themes/news';
+import { portfolioTheme } from '@/themes/portfolio';
+import { travelTheme } from '@/themes/travel';
 
 /**
  * Theme registry.
@@ -28,6 +32,10 @@ function registerTheme(theme: ThemeDefinition): void {
 registerTheme(businessTheme);
 registerTheme(travelTheme);
 registerTheme(blogTheme);
+registerTheme(portfolioTheme);
+registerTheme(newsTheme);
+registerTheme(itTheme);
+registerTheme(agencyTheme);
 
 export function getTheme(themeId: string | null | undefined): ThemeDefinition {
   const theme = themeId ? themes.get(themeId) : undefined;

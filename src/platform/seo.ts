@@ -68,8 +68,8 @@ export function metadataForPage(ctx: SiteContext, page: Page): Metadata {
 export function metadataForPost(ctx: SiteContext, post: Post): Metadata {
   return buildMetadata({
     ctx,
-    title: post.title,
-    description: post.excerpt,
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
     path: `/posts/${post.slug}`,
     ogImage: post.coverImage,
     type: 'article',

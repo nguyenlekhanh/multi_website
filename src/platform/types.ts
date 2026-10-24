@@ -43,6 +43,10 @@ export interface SiteIdentity {
   logoText: string;
   /** 1-2 letter monogram fallback for logos. */
   logoInitials: string;
+  /** Optional image reference (site-relative path or https URL). */
+  logoUrl?: string;
+  /** Optional favicon reference (site-relative path or https URL). */
+  faviconUrl?: string;
 }
 
 export interface SeoSettings {
@@ -260,6 +264,9 @@ export interface Post {
   coverAlt?: string;
   categoryId?: string;
   tags?: string[];
+  /** Optional SEO overrides used by the platform metadata layer. */
+  seoTitle?: string;
+  seoDescription?: string;
   author: Author;
   publishedAt: string;
   readingMinutes: number;
@@ -317,7 +324,12 @@ export interface ThemeDefinition {
     activeCategory?: string;
     heading?: string;
   }>;
-  post?: ComponentType<{ ctx: SiteContext; post: Post; related: Post[] }>;
+  post?: ComponentType<{
+    ctx: SiteContext;
+    post: Post;
+    related: Post[];
+    categories?: CategoryWithCount[];
+  }>;
   categories?: ComponentType<{ ctx: SiteContext; categories: CategoryWithCount[] }>;
   notFound: ComponentType<{ ctx: SiteContext }>;
 }

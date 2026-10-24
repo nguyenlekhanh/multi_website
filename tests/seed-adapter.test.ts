@@ -12,7 +12,9 @@ const db = new SeedDataAdapter();
 
 describe('seed data integrity', () => {
   it('has exactly the three demo sites with stable ids', () => {
-    expect(seedSites.map((s) => s.id).sort()).toEqual(['blog-demo', 'business-demo', 'travel-demo']);
+    expect(seedSites.map((s) => s.id).sort()).toEqual([
+      'agency-demo', 'blog-demo', 'business-demo', 'news-demo', 'portfolio-demo', 'tech-demo', 'travel-demo',
+    ]);
   });
 
   it('maps one primary domain per site and keeps hosts globally unique', () => {
@@ -41,7 +43,10 @@ describe('seed data integrity', () => {
     }
     // Identical slugs across different sites are expected (e.g. 'contact').
     const contactPages = seedPages.filter((p) => p.slug === 'contact');
-    expect(contactPages.length).toBe(3); // one per site — allowed by design
+    const contactSites = new Set(contactPages.map((p) => p.siteId));
+    // Six of the seven demos define a contact page (the news demo does not).
+    expect(contactPages.length).toBe(6);
+    expect(contactSites.size).toBe(6); // all on distinct sites
   });
 
   it('every post references an author, category, and site that exist', () => {
@@ -99,7 +104,24 @@ describe('seed adapter: site resolution', () => {
   });
 
   it('lists all sites', async () => {
-    expect((await db.listSites()).length).toBe(3);
+    expect((await db.listSites()).length).toBe(7);
+  });
+
+  it('resolves every Phase 5 demo site by hostname with the right theme', async () => {
+    const expectations: Array<[string, string, string]> = [
+      ['portfolio.demo.local', 'portfolio-demo', 'portfolio'],
+      ['news.demo.local', 'news-demo', 'news'],
+      ['tech.demo.local', 'tech-demo', 'it'],
+      ['agency.demo.local', 'agency-demo', 'agency'],
+    ];
+    for (const [host, siteId, themeId] of expectations) {
+      const site = await db.getSiteByHost(`${host}:3000`);
+      expect(site?.id, host).toBe(siteId);
+      expect(site?.themeId, host).toBe(themeId);
+      const home = await db.getHomepage(siteId);
+      expect(home?.isHomepage, `${siteId} homepage`).toBe(true);
+      expect((await db.listPosts(siteId)).every((p) => p.siteId === siteId)).toBe(true);
+    }
   });
 });
 

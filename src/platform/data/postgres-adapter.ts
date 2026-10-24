@@ -303,6 +303,8 @@ function mapPost(row: {
   coverImage: string | null;
   coverAlt: string | null;
   categoryId: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
   featured: boolean;
   readingMinutes: number;
   tags: string[];
@@ -320,6 +322,8 @@ function mapPost(row: {
     coverImage: row.coverImage ?? undefined,
     coverAlt: row.coverAlt ?? undefined,
     categoryId: row.categoryId ?? undefined,
+    seoTitle: row.seoTitle ?? undefined,
+    seoDescription: row.seoDescription ?? undefined,
     tags: row.tags,
     author: {
       id: row.author.id,

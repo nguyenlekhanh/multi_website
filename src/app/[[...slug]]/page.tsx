@@ -161,7 +161,14 @@ export default async function SiteDispatcher({ params, searchParams }: RoutePara
       break;
     case 'post':
       if (!theme.post) notFound();
-      view = <theme.post ctx={ctx} post={content.post!} related={content.relatedPosts ?? []} />;
+      view = (
+        <theme.post
+          ctx={ctx}
+          post={content.post!}
+          related={content.relatedPosts ?? []}
+          categories={content.categories}
+        />
+      );;
       break;
     case 'categories':
       if (!theme.categories) notFound();
