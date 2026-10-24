@@ -1,0 +1,189 @@
+// MultiSite Platform — database schema (source of truth).
+//
+// docs/schema.sql is kept as a readable reference; this file generates the
+// version-controlled migrations in prisma/migrations/. Apply with
+// `npm run db:deploy` (production) or `npm run db:migrate` (development).
+//
+// Delete behavior: content rows RESTRICT the deletion of their Site so a
+// website's data can never disappear by accident; removing a site is an
+// explicit, ordered operation (delete content first). SiteSettings is a pure
+// child record and cascades.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SiteStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Site {
+  id        String     @id
+  name      String
+  themeId   String     @map("theme_id")
+  status    SiteStatus @default(ACTIVE)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  settings   SiteSettings?
+  domains    Domain[]
+  pages      Page[]
+  posts      Post[]
+  categories Category[]
+  authors    Author[]
+  media      Media[]
+
+  @@map("sites")
+}
+
+model Domain {
+  id        Int     @id @default(autoincrement())
+  siteId    String  @map("site_id")
+  host      String  @unique
+  isPrimary Boolean @default(false) @map("is_primary")
+  verified  Boolean @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  site Site @relation(fields: [siteId], references: [id], onDelete: Restrict)
+
+  @@index([siteId])
+  @@map("domains")
+}
+
+model SiteSettings {
+  siteId    String   @id @map("site_id")
+  /// { name, tagline, logoText, logoInitials } — validated on read/write
+  identity  Json
+  /// BrandColors — validated
+  colors    Json
+  /// NavItem[] — validated
+  nav       Json
+  /// NavItem[] — validated
+  footerNav Json     @map("footer_nav")
+  /// SeoSettings — validated
+  seo       Json
+  /// Forward-compatible bag (e.g. landingBlurb) — not read by core logic
+  extras    Json?
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  site Site @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@map("site_settings")
+}
+
+model Page {
+  id             Int          @id @default(autoincrement())
+  siteId         String       @map("site_id")
+  slug           String
+  title          String
+  eyebrow        String?
+  seoTitle       String?      @map("seo_title")
+  seoDescription String?      @map("seo_description")
+  ogImage        String?      @map("og_image")
+  isHomepage     Boolean      @default(false) @map("is_homepage")
+  status         ContentStatus @default(PUBLISHED)
+  /// Block[] — validated against the platform Block union
+  blocks         Json         @default("[]")
+  publishedAt    DateTime?    @map("published_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
+  site Site @relation(fields: [siteId], references: [id], onDelete: Restrict)
+
+  // A slug exists at most once per site; drafts flip status in place.
+  @@unique([siteId, slug])
+  @@index([siteId, status])
+  @@map("pages")
+}
+
+model Category {
+  id          String  @id
+  siteId      String  @map("site_id")
+  slug        String
+  name        String
+  description String?
+
+  site  Site   @relation(fields: [siteId], references: [id], onDelete: Restrict)
+  posts Post[]
+
+  @@unique([siteId, slug])
+  @@index([siteId])
+  @@map("categories")
+}
+
+model Author {
+  id       String  @id
+  siteId   String  @map("site_id")
+  slug     String
+  name     String
+  role     String?
+  bio      String?
+  initials String
+  avatar   String?
+
+  site  Site   @relation(fields: [siteId], references: [id], onDelete: Restrict)
+  posts Post[]
+
+  @@unique([siteId, slug])
+  @@index([siteId])
+  @@map("authors")
+}
+
+model Post {
+  id             Int           @id @default(autoincrement())
+  siteId         String        @map("site_id")
+  slug           String
+  title          String
+  excerpt        String        @default("")
+  /// string[] of paragraphs — validated
+  body           Json          @default("[]")
+  coverImage     String?       @map("cover_image")
+  coverAlt       String?       @map("cover_alt")
+  categoryId     String?       @map("category_id")
+  authorId       String        @map("author_id")
+  status         ContentStatus @default(PUBLISHED)
+  featured       Boolean       @default(false)
+  readingMinutes Int           @default(5) @map("reading_minutes")
+  tags           String[]
+  publishedAt    DateTime?     @map("published_at")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  site     Site      @relation(fields: [siteId], references: [id], onDelete: Restrict)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  author   Author    @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@unique([siteId, slug])
+  @@index([siteId, status, publishedAt(sort: Desc)])
+  @@index([siteId, categoryId])
+  @@map("posts")
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  siteId    String   @map("site_id")
+  /// Storage path or CDN URL — binaries are never stored in the row
+  src       String
+  alt       String   @default("")
+  kind      String   @default("image")
+  width     Int?
+  height    Int?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  site Site @relation(fields: [siteId], references: [id], onDelete: Restrict)
+
+  @@unique([siteId, src])
+  @@index([siteId])
+  @@map("media")
+}
