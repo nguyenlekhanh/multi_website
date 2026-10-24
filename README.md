@@ -299,6 +299,19 @@ in that site's media library). **File uploads are not supported yet** — no
 local-disk or object-storage upload workflow exists; external images must be
 hosted elsewhere. Missing images render graceful placeholders everywhere.
 
+## AI content automation (Phase 6)
+
+Optional AI article generation with local **Ollama**, **OpenAI**, or any
+**OpenAI-compatible** provider. Fully integrated with the existing CMS:
+per-site topics/writing settings in the admin (`/admin/sites/{siteId}/ai`),
+a PostgreSQL-backed job queue, a **local worker** (`npm run ai:worker`) that
+runs inference where Ollama lives (required for Vercel deployments — Vercel
+Functions cannot reach your localhost), draft-first publishing with opt-in
+SCHEDULED/AUTOPILOT modes, duplicate prevention, bounded retries, and full
+audit trails. Verified end-to-end against a real local Ollama model
+(qwen2.5vl:3b). Setup, scheduling, security, and troubleshooting:
+[docs/ai-content-automation.md](docs/ai-content-automation.md).
+
 ## Admin dashboard (Phase 3A)
 
 `/admin` is a real, database-backed administration area for websites, domains,

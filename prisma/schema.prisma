@@ -33,6 +33,20 @@ enum AdminRole {
   SITE_ADMIN
 }
 
+enum AiJobStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+enum AiPublishMode {
+  DRAFT
+  SCHEDULED
+  AUTOPILOT
+}
+
 model Site {
   id        String     @id
   name      String
@@ -49,6 +63,9 @@ model Site {
   authors    Author[]
   media      Media[]
   memberships SiteMembership[]
+  aiSettings  AiSettings?
+  aiTopics    AiTopic[]
+  aiJobs      AiJob[]
 
   @@map("sites")
 }
@@ -140,6 +157,7 @@ model Author {
 
   site  Site   @relation(fields: [siteId], references: [id], onDelete: Restrict)
   posts Post[]
+  aiSettings AiSettings[]
 
   @@unique([siteId, slug])
   @@index([siteId])
@@ -232,6 +250,112 @@ model SiteMembership {
   @@unique([userId, siteId])
   @@index([siteId])
   @@map("site_memberships")
+}
+
+// ============================================================================
+// AI content automation: per-site configuration, topic queue, job records.
+// ============================================================================
+
+/// Per-site automation configuration (1:1). Provider API keys are NEVER
+/// stored here — they come from server-side environment variables only.
+model AiSettings {
+  siteId    String  @id @map("site_id")
+  enabled   Boolean @default(false)
+  /// "ollama" | "openai" | "openai-compatible"
+  provider  String  @default("ollama")
+  /// Model identifier within the selected provider (e.g. "qwen2.5vl:3b").
+  model     String  @default("")
+  language  String  @default("English")
+  tone      String  @default("professional")
+  audience  String  @default("")
+  /// Target body length in words; enforced with bounds at generation time.
+  wordCountTarget Int    @default(800) @map("word_count_target")
+  /// "article" | "listicle" | "howto"
+  format    String  @default("article")
+  /// Author + allowed categories must belong to this site (validated).
+  authorId  String? @map("author_id")
+  categoryIds String[] @map("category_ids")
+  /// DRAFT | SCHEDULED | AUTOPILOT
+  publishMode AiPublishMode @default(DRAFT) @map("publish_mode")
+  postsPerWeek Int @default(3) @map("posts_per_week")
+  /// Preferred local publish times, "HH:mm" strings.
+  publishTimes String[] @map("publish_times")
+  /// IANA time zone for publish times and daily limits.
+  timezone  String  @default("UTC")
+  maxAttempts Int @default(3) @map("max_attempts")
+  maxArticlesPerDay Int @default(2) @map("max_articles_per_day")
+  /// Optional extra writing instructions from the administrator.
+  customInstructions String? @map("custom_instructions")
+  lastGenerationAt DateTime? @map("last_generation_at")
+  /// Global pause switch for this site's automation.
+  paused    Boolean @default(false)
+  /// Local date (yyyy-mm-dd in the site timezone) of the last scheduling sweep.
+  lastScheduleDate String? @map("last_schedule_date")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  site Site @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  author Author? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@map("ai_settings")
+}
+
+/// Topic definitions the generator draws from. Per-site scoped.
+model AiTopic {
+  id        String   @id @default(cuid())
+  siteId    String   @map("site_id")
+  title     String
+  keywords  String[]
+  /// Topics/angles the model must avoid.
+  excluded  String[]
+  notes     String?
+  active    Boolean  @default(true)
+  lastUsedAt DateTime? @map("last_used_at")
+  usageCount Int @default(0) @map("usage_count")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  site Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  jobs AiJob[]
+
+  @@unique([siteId, title])
+  @@index([siteId, active])
+  @@map("ai_topics")
+}
+
+/// Generation/publishing job records — the persistent queue.
+model AiJob {
+  id        String      @id @default(cuid())
+  siteId    String      @map("site_id")
+  topicId   String?     @map("topic_id")
+  /// Human-readable topic snapshot (survives topic deletion).
+  topicTitle String     @map("topic_title")
+  type      String      @default("GENERATE_ARTICLE")
+  status    AiJobStatus @default(PENDING)
+  attempts  Int         @default(0)
+  maxAttempts Int       @default(3) @map("max_attempts")
+  scheduledAt DateTime   @default(now()) @map("scheduled_at")
+  startedAt DateTime?   @map("started_at")
+  finishedAt DateTime?  @map("finished_at")
+  /// Sanitized, user-safe error message (no provider internals).
+  error     String?
+  /// The created post (posts.id) once generation succeeded.
+  postId    Int?        @map("post_id")
+  /// Which worker claimed the job (diagnostics only).
+  workerId  String?     @map("worker_id")
+  /// Uniqueness guarantee: one enqueue per site/topic/day-slot.
+  idempotencyKey String @unique @map("idempotency_key")
+  /// Provider, model, publish mode, publishAt, prompt version. No secrets.
+  metadata  Json?
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  site  Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  topic AiTopic? @relation(fields: [topicId], references: [id], onDelete: SetNull)
+
+  @@index([status, scheduledAt])
+  @@index([siteId, status])
+  @@map("ai_jobs")
 }
 
 model AuditLog {

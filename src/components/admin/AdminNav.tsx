@@ -7,6 +7,7 @@ import { cn } from '@/components/shared/cn';
 const links = [
   { href: '/admin', label: 'Overview', exact: true },
   { href: '/admin/sites', label: 'Websites', exact: false },
+  { href: '/admin/ai', label: 'AI automation', exact: false },
   { href: '/admin/audit', label: 'Audit log', exact: false },
 ];
 

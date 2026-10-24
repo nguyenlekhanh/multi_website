@@ -15,7 +15,9 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "admin:provision": "tsx scripts/provision-admin.ts"
+    "admin:provision": "tsx scripts/provision-admin.ts",
+    "ai:worker": "tsx scripts/ai-worker.ts",
+    "ai:test-live": "tsx scripts/test-ollama-live.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
