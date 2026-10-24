@@ -118,29 +118,16 @@ With a database later, these become rows in the tables described in
 
 ## Deploy on Vercel
 
-1. Push the repo to GitHub and import it at vercel.com (framework auto-detected,
-   build command `next build`). **One deployment serves all sites.**
-2. Add custom domains: Project → Settings → Domains → add e.g.
-   `meridian-consulting.com` and `www.meridian-consulting.com`. Vercel shows
-   the DNS records to create at your registrar (A/ALIAS/CNAME). DNS must
-   propagate and the domain must verify before traffic routes — custom domains
-   never work automatically without this step.
-3. Map each domain to a site: insert the hostname into that site's `domains`
-   table (the demo import does this for the three demo domains). Production
-   resolution is hostname-based and needs no wildcard rewrites.
-4. Environment variables (Project → Settings → Environment Variables) — set
-   separately for Preview and Production:
-   - `DATA_SOURCE=postgres` — required in production, selects the database.
-   - `DATABASE_URL` — your provider's **pooled** connection string.
-   - `DIRECT_URL` — only for providers that separate pooled/direct URLs;
-     used by `prisma migrate deploy`.
-   - `NEXT_PUBLIC_SITE_URL` — canonical origin for metadata (recommended).
-5. Apply migrations once from your machine or a CI step:
-   `DATABASE_URL=... npx prisma migrate deploy` — never during request handling.
-6. Import the demo sites if wanted: `DATABASE_URL=... npm run db:seed`
-   (refuses to run in production unless ALLOW_DEMO_SEED_IN_PROD=1).
-7. Serverless compatibility: the Prisma client is a single pooled instance per
-   server; middleware stays on the Edge and never touches the database.
+The full production deployment runbook lives in
+[docs/deploy-vercel.md](docs/deploy-vercel.md): Supabase PostgreSQL setup
+(pooled vs direct URLs), the exact environment-variable matrix for Vercel
+Preview and Production, the migration workflow, Super Admin provisioning,
+custom-domain configuration, the shipped production smoke test
+(`node scripts/smoke-test.mjs <url>`), rollback considerations, and
+troubleshooting. Status: **deployment prepared and locally verified — no live
+deployment has been performed yet** (no Vercel/Supabase credentials in this
+environment); the runbook is the exact remaining manual procedure.
+
 
 ## PostgreSQL
 
