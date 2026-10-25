@@ -4,6 +4,7 @@ import { requireAdmin } from '@/lib/admin/require-admin';
 import { PageHeader } from '@/components/admin/PageHeader';
 import { ThemePicker } from '@/components/admin/ThemePicker';
 import { listThemes } from '@/platform/registry';
+import { listInstalledThemes } from '@/lib/theme-package/store';
 
 export const metadata = { title: 'Theme' };
 
@@ -27,6 +28,16 @@ export default async function SiteThemePage({ params }: { params: Promise<{ site
     },
   }));
 
+  // Installed theme packages appear alongside native themes — the picker has
+  // no separate hardcoded list; it merges whatever the library provides.
+  const packages = (await listInstalledThemes()).map((pkg) => ({
+    id: `package:${pkg.themeId}`,
+    name: `${pkg.name} (package)`,
+    description: `${pkg.description} — v${pkg.version} by ${pkg.authorName}.`,
+    version: pkg.version,
+    colors: { primary: '#0F3D3E', accent: '#C9A227', background: '#FAF9F6' },
+  }));
+
   return (
     <>
       <PageHeader
@@ -40,7 +51,7 @@ export default async function SiteThemePage({ params }: { params: Promise<{ site
         ]}
       />
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <ThemePicker siteId={site.id} currentThemeId={site.themeId} themes={themes} />
+        <ThemePicker siteId={site.id} currentThemeId={site.themeId} themes={[...themes, ...packages]} />
       </div>
     </>
   );

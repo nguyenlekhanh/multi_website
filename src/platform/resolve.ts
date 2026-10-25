@@ -65,9 +65,12 @@ async function buildContext(site: Site, options: { preview: boolean }): Promise<
   const requestHost = h.get('x-forwarded-host')?.split(',')[0]?.trim() || h.get('host') || site.domain;
 
   // Validate the theme identifier: unknown ids never break rendering.
-  const effectiveThemeId = isRegisteredTheme(site.themeId)
-    ? site.themeId
-    : getTheme(site.themeId).id;
+  // Package references (package:<id>) pass through here; the renderer
+  // resolves them (falling back safely if the package is missing).
+  const effectiveThemeId =
+    isRegisteredTheme(site.themeId) || site.themeId.startsWith('package:')
+      ? site.themeId
+      : getTheme(site.themeId).id;
 
   // In preview mode, canonical URLs still point at the site's primary domain.
   const origin = options.preview ? `https://${site.domain}` : `${proto}://${requestHost}`;

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ServiceUnavailable } from '@/components/preview/ServiceUnavailable';
 import { isDataUnavailableError } from '@/platform/data';
 import { resolveSite } from '@/platform/resolve';
-import { getTheme } from '@/platform/registry';
+import { resolveThemeDefinition } from '@/lib/theme-package/store';
 
 /**
  * Global 404. Reached when a known site serves an unknown path — rendered
@@ -41,7 +41,7 @@ export default async function GlobalNotFound() {
     );
   }
 
-  const theme = getTheme(ctx.effectiveThemeId);
+  const theme = await resolveThemeDefinition(ctx.effectiveThemeId);
   return (
     <theme.layout ctx={ctx}>
       <theme.notFound ctx={ctx} />

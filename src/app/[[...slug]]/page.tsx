@@ -6,6 +6,7 @@ import { PlatformLanding } from '@/components/preview/PlatformLanding';
 import { ServiceUnavailable } from '@/components/preview/ServiceUnavailable';
 import { db, isDataUnavailableError } from '@/platform/data';
 import { getTheme, isRegisteredTheme, listThemes } from '@/platform/registry';
+import { resolveThemeDefinition } from '@/lib/theme-package/store';
 import { resolveSite } from '@/platform/resolve';
 import { buildMetadata, metadataForPage, metadataForPost } from '@/platform/seo';
 import { loadRouteContent, parseRoute } from '@/platform/routing';
@@ -119,7 +120,7 @@ export default async function SiteDispatcher({ params, searchParams }: RoutePara
   }
 
   const route = parseRoute((await params).slug, toURLSearchParams(await searchParams));
-  const theme = getTheme(ctx.effectiveThemeId);
+  const theme = await resolveThemeDefinition(ctx.effectiveThemeId);
 
   // Unknown route → the active theme's 404 (rendered by app/not-found.tsx).
   if (route.kind === 'notFound') notFound();
@@ -202,7 +203,7 @@ async function DevControls({ ctx }: { ctx: SiteContext }) {
         sites={sites.map((s) => ({
           id: s.id,
           name: s.name,
-          themeName: getTheme(s.themeId).name,
+          themeName: s.themeId.startsWith('package:') ? `Package: ${s.themeId.slice(8)}` : getTheme(s.themeId).name,
           color: s.settings.colors.primary,
         }))}
       />

@@ -19,7 +19,7 @@ export function NavLink({
   className?: string;
   activeClassName?: string;
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '/';
   const base = href.split('?')[0] || '/';
   const active = base === '/' ? pathname === '/' : pathname === base || pathname.startsWith(`${base}/`);
 

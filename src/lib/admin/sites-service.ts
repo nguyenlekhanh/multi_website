@@ -306,9 +306,11 @@ export async function setSiteTheme(
 ): Promise<ServiceResult<{ themeId: string }>> {
   try {
     await assertSiteAccess(actor, siteId);
-    // Theme ids are validated against the registry — the single source of
-    // truth for selectable themes. Arbitrary strings never reach the DB.
-    if (!isRegisteredTheme(themeId)) {
+    // Theme ids are validated against the registry (native themes) or the
+    // installed-package store (package:<id>) — arbitrary strings never
+    // reach the DB.
+    const { isValidThemeReference } = await import('@/lib/theme-package/store');
+    if (!(isRegisteredTheme(themeId) || (themeId.startsWith('package:') && (await isValidThemeReference(themeId))))) {
       return fail(`Unknown theme "${themeId}".`, 'VALIDATION');
     }
     const site = await getPrisma().site.findUnique({ where: { id: siteId }, select: { themeId: true } });

@@ -299,6 +299,25 @@ in that site's media library). **File uploads are not supported yet** — no
 local-disk or object-storage upload workflow exists; external images must be
 hosted elsewhere. Missing images render graceful placeholders everywhere.
 
+## Theme packages (Phase 7)
+
+New themes can be authored as **MSP Theme Packages** — declarative ZIPs
+(manifest + JSON templates + scoped CSS + preview image) that are validated,
+installed, and rendered by a platform runtime renderer. No code inside a
+package is ever executed. The sample theme
+[real-estate-modern](theme-packages/real-estate-modern) ships in this repo:
+
+```bash
+npm run theme:validate -- theme-packages/real-estate-modern
+npm run theme:pack     -- theme-packages/real-estate-modern   # → .zip
+```
+
+Upload in **Admin → Theme library** (Super Admin), then activate per website
+in its Theme picker (appears beside the seven built-ins). Specification:
+[docs/theme-package-v1.md](docs/theme-package-v1.md) · authoring:
+[docs/theme-authoring-guide.md](docs/theme-authoring-guide.md) · security:
+[docs/theme-security.md](docs/theme-security.md).
+
 ## AI content automation (Phase 6)
 
 Optional AI article generation with local **Ollama**, **OpenAI**, or any

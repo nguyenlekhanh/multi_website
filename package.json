@@ -17,7 +17,10 @@
     "db:studio": "prisma studio",
     "admin:provision": "tsx scripts/provision-admin.ts",
     "ai:worker": "tsx scripts/ai-worker.ts",
-    "ai:test-live": "tsx scripts/test-ollama-live.ts"
+    "ai:test-live": "tsx scripts/test-ollama-live.ts",
+    "theme:validate": "tsx scripts/theme-cli.ts validate",
+    "theme:pack": "tsx scripts/theme-cli.ts pack",
+    "theme:install": "tsx scripts/theme-cli.ts install"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

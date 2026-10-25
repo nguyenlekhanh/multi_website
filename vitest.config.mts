@@ -13,7 +13,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['tests/**/*.test.ts'],
+    include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     testTimeout: 30000,
     hookTimeout: 120000,
     // Keep every Prisma pool small: the local verification database runs

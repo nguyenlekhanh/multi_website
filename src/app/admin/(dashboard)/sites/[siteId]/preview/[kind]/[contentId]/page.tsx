@@ -5,7 +5,7 @@ import { getSiteForAdmin } from '@/lib/admin/sites-service';
 import { getPageForAdmin, getPostForAdmin } from '@/lib/admin/content-service';
 import { requireAdmin } from '@/lib/admin/require-admin';
 import { isDataUnavailableError } from '@/platform/data/errors';
-import { getTheme, isRegisteredTheme } from '@/platform/registry';
+import { resolveThemeDefinition } from '@/lib/theme-package/store';
 import type { SiteContext } from '@/platform/types';
 
 /**
@@ -57,17 +57,17 @@ export default async function ContentPreviewPage({ params }: PreviewProps) {
       name: site.name,
       domain: site.primaryDomain ?? site.id,
       domains: site.domains.map((d) => d.host),
-      themeId: isRegisteredTheme(site.themeId) ? site.themeId : getTheme(site.themeId).id,
+      themeId: site.themeId,
       settings: site.settings,
       createdAt: '1970-01-01T00:00:00.000Z',
       updatedAt: site.updatedAt,
     },
     settings: site.settings,
-    effectiveThemeId: isRegisteredTheme(site.themeId) ? site.themeId : getTheme(site.themeId).id,
+    effectiveThemeId: site.themeId,
     origin: `https://${site.primaryDomain ?? site.id}`,
     preview: true,
   };
-  const theme = getTheme(ctx.effectiveThemeId);
+  const theme = await resolveThemeDefinition(ctx.effectiveThemeId);
 
   let content: React.ReactNode;
   let status: string;

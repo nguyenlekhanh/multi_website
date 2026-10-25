@@ -1,0 +1,21 @@
+{
+  "route": "page",
+  "contentHeader": { "style": "band", "showEyebrow": true },
+  "sections": [
+    { "type": "content" },
+    {
+      "type": "static",
+      "variant": "panel",
+      "block": {
+        "type": "cta",
+        "heading": "Ready when you are",
+        "body": "Our advisors answer every enquiry personally, within one business day.",
+        "buttonLabel": "Talk to an advisor",
+        "buttonHref": "/contact"
+      }
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "route": "post",
+  "contentHeader": { "style": "none", "showEyebrow": false },
+  "sections": [
+    { "type": "content" }
+  ],
+  "options": {
+    "postShowCover": true,
+    "postShowAuthorCard": true,
+    "containerWidth": "normal"
+  }
+}

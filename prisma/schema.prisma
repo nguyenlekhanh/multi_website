@@ -47,6 +47,11 @@ enum AiPublishMode {
   AUTOPILOT
 }
 
+enum ThemePackageStatus {
+  CURRENT
+  ARCHIVED
+}
+
 model Site {
   id        String     @id
   name      String
@@ -356,6 +361,31 @@ model AiJob {
   @@index([status, scheduledAt])
   @@index([siteId, status])
   @@map("ai_jobs")
+}
+
+/// Installed MSP theme packages (v1 format). Versions are kept for
+/// rollback: one CURRENT row per theme id, older versions ARCHIVED.
+model ThemePackage {
+  id            String             @id @default(cuid())
+  themeId       String             @map("theme_id")
+  version       String
+  status        ThemePackageStatus @default(CURRENT)
+  name          String
+  description   String
+  authorName    String             @map("author_name")
+  manifest      Json
+  templates     Json
+  css           String             @default("")
+  previewImage  Bytes?             @map("preview_image")
+  previewMime   String?            @map("preview_mime")
+  fileCount     Int                @map("file_count")
+  totalBytes    Int                @map("total_bytes")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+
+  @@unique([themeId, version])
+  @@index([themeId, status])
+  @@map("theme_packages")
 }
 
 model AuditLog {

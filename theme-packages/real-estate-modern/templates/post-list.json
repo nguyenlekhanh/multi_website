@@ -1,0 +1,11 @@
+{
+  "route": "postList",
+  "contentHeader": { "style": "none", "showEyebrow": false },
+  "sections": [
+    { "type": "content" }
+  ],
+  "options": {
+    "postListLayout": "grid",
+    "postListFeaturedFirst": true
+  }
+}

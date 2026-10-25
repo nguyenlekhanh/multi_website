@@ -1,0 +1,59 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "real-estate-modern",
+  "name": "Real Estate Modern",
+  "version": "1.0.0",
+  "description": "Modern premium real-estate design: immersive property hero, overlay listings, trust stats, and a clean editorial journal.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": ["responsive", "post-list", "post-detail", "seo", "overlay-cards"],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "nav-cta",
+      "sticky": true,
+      "ctaLabel": "Book a viewing",
+      "ctaHref": "/contact"
+    },
+    "footer": {
+      "variant": "columns",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "serif",
+      "bodyFont": "sans",
+      "displayScale": 1.1
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}
