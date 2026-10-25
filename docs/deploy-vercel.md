@@ -1,8 +1,20 @@
 # Deploy to Vercel — runbook
 
-Status: **deployment prepared and locally verified; no live deployment has
-been performed** (no Vercel or Supabase credentials exist in this
-environment). Every step below is the exact remaining manual procedure.
+Status (2026-10-24): **live on Vercel.** The repo is connected to GitHub
+(`nguyenlekhanh/multi_website`) and imported as the Vercel project
+`multi-website` (team `stella-orions-projects`). A first deployment is live
+at **https://multi-website-jet.vercel.app** running in `DATA_SOURCE=seed`
+mode (demo fixtures) — the shipped smoke test passes 19/19 against it,
+including all seven themes, site isolation, the admin login gate, and
+secret-leak scans; browser-verified login error handling and theme previews
+over HTTPS.
+
+**PostgreSQL production is not yet connected.** The Supabase project
+`zbcgvnxdaivbrhtsrywk` exists (API keys are in local `.env`), but the
+Postgres connection password is not available to the tooling, so migrations
+have NOT been run and production env vars have not been set. Provide the
+Supabase database password (or a `DATABASE_URL`), then follow §1 and §5
+below. The remaining manual procedure:
 
 ## 0. What is already deployment-ready (verified locally)
 
