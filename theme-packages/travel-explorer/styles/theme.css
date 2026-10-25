@@ -1,0 +1,6 @@
+/* Travel Explorer - big imagery, airy sections, rounded corners */
+main img { border-radius: 1rem; }
+main > section { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 640px) { main > section { padding-top: 4.5rem; padding-bottom: 4.5rem; } }
+a.group { transition: transform .3s ease, box-shadow .3s ease; }
+a.group:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }

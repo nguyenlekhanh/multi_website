@@ -1,0 +1,4 @@
+/* Education Academy - structured grid feel, clear section heads */
+main > section { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 640px) { main > section { padding-top: 4rem; padding-bottom: 4rem; } }
+h2 { padding-bottom: 0.5rem; }

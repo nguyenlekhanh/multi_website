@@ -1,0 +1,15 @@
+{
+  "route": "postList",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    }
+  ],
+  "options": {
+    "postListLayout": "list"
+  }
+}

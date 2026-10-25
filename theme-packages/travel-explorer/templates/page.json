@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cta",
+        "heading": "Where to next?",
+        "body": "Tell us the kind of trip you are dreaming about.",
+        "buttonLabel": "Plan a journey",
+        "buttonHref": "/contact"
+      },
+      "variant": "split"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

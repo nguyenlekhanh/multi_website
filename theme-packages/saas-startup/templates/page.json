@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cta",
+        "heading": "Try it with your team",
+        "body": "No credit card, no sales call - just working software.",
+        "buttonLabel": "Start free",
+        "buttonHref": "/contact"
+      },
+      "variant": "banner"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

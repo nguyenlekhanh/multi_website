@@ -1,0 +1,17 @@
+{
+  "route": "post",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    }
+  ],
+  "options": {
+    "postShowCover": true,
+    "postShowAuthorCard": false,
+    "containerWidth": "narrow"
+  }
+}

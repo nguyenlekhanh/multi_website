@@ -1,0 +1,65 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "saas-startup",
+  "name": "SaaS Startup",
+  "version": "1.0.0",
+  "description": "Modern product design: gradient-split hero, capability features, metric band, plan-style cards, and a start-free CTA.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "plan-cards",
+    "trial-cta"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "nav-cta",
+      "sticky": true,
+      "ctaLabel": "Start free",
+      "ctaHref": "/contact"
+    },
+    "footer": {
+      "variant": "minimal",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "sans",
+      "bodyFont": "sans"
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}

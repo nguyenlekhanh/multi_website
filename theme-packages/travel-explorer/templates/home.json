@@ -1,0 +1,15 @@
+{
+  "route": "home",
+  "contentHeader": {
+    "style": "none",
+    "showEyebrow": false
+  },
+  "sections": [
+    {
+      "type": "content"
+    }
+  ],
+  "options": {
+    "containerWidth": "wide"
+  }
+}

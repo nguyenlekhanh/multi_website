@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cta",
+        "heading": "Enjoyed this? Say hello.",
+        "body": "Letters, corrections, and story ideas are always welcome.",
+        "buttonLabel": "Get in touch",
+        "buttonHref": "/contact"
+      },
+      "variant": "banner"
+    }
+  ],
+  "options": {
+    "containerWidth": "narrow"
+  }
+}

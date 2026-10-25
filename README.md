@@ -312,8 +312,13 @@ npm run theme:validate -- theme-packages/real-estate-modern
 npm run theme:pack     -- theme-packages/real-estate-modern   # → .zip
 ```
 
-Upload in **Admin → Theme library** (Super Admin), then activate per website
-in its Theme picker (appears beside the seven built-ins). Specification:
+The library ships **seven packages** — real-estate-modern, blog-editorial,
+travel-explorer, restaurant-bistro, hotel-luxury, education-academy, and
+saas-startup — each a visually distinct, validated, round-trip-packed theme
+(see [docs/theme-library.md](docs/theme-library.md)). Upload in
+**Admin → Theme library** (Super Admin), then activate per website in its
+Theme picker (appears beside the seven built-ins). Batch install for local/
+test databases: `npm run themes:install-all`. Specification:
 [docs/theme-package-v1.md](docs/theme-package-v1.md) · authoring:
 [docs/theme-authoring-guide.md](docs/theme-authoring-guide.md) · security:
 [docs/theme-security.md](docs/theme-security.md).

@@ -1,0 +1,27 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "contact",
+        "heading": "Reservations",
+        "body": [
+          "Call us or write - we answer personally."
+        ],
+        "hours": "Tuesday-Sunday, 17:00-23:00"
+      },
+      "variant": "rows"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

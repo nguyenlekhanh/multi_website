@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cta",
+        "heading": "Plan your stay",
+        "body": "Our concierge responds within a day - every enquiry, personally.",
+        "buttonLabel": "Contact the concierge",
+        "buttonHref": "/contact"
+      },
+      "variant": "panel"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

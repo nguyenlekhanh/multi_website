@@ -51,9 +51,11 @@ export interface InstalledThemeRow {
 export function InstalledThemeCard({
   theme,
   archivedVersions,
+  usedBy = [],
 }: {
   theme: InstalledThemeRow;
   archivedVersions: { version: string; updatedAt: string }[];
+  usedBy?: { id: string; name: string }[];
 }) {
   const [rollbackState, rollbackFormAction] = useActionState(rollbackThemeAction, initial);
   const [uninstallState, uninstallFormAction] = useActionState(uninstallThemeAction, initial);
@@ -71,6 +73,18 @@ export function InstalledThemeCard({
           </div>
           <p className="mt-1.5 line-clamp-2 text-sm t-text-muted">{theme.description}</p>
           <p className="mt-1 text-xs text-slate-400">by {theme.authorName} · updated {theme.updatedAt.slice(0, 10)}</p>
+          {usedBy.length > 0 ? (
+            <p className="mt-2 text-xs text-slate-500">
+              Active on:{' '}
+              {usedBy.map((site) => (
+                <a key={site.id} href={`/admin/sites/${site.id}/theme`} className="font-semibold text-indigo-600 hover:underline">
+                  {site.name}
+                </a>
+              )).reduce<React.ReactNode[]>((acc, node, i) => (i === 0 ? [node] : [...acc, ', ', node]), [])}
+            </p>
+          ) : (
+            <p className="mt-2 text-xs text-slate-400">Not used by any website.</p>
+          )}
         </div>
       </div>
 

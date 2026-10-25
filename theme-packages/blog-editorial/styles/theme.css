@@ -1,0 +1,6 @@
+/* Blog Editorial - generous line height, rule separators, calm rhythm */
+main { line-height: 1.75; }
+main > section { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+@media (min-width: 640px) { main > section { padding-top: 4rem; padding-bottom: 4rem; } }
+h1, h2, h3 { letter-spacing: -0.015em; }
+section + section { border-top: 1px solid rgba(0,0,0,0.07); }

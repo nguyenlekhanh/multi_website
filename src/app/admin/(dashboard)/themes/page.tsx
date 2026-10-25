@@ -16,11 +16,20 @@ export default async function ThemeLibraryPage() {
     authorName: string; status: 'CURRENT' | 'ARCHIVED'; updatedAt: string;
   }[] = [];
   const archived: Record<string, { version: string; updatedAt: string }[]> = {};
+  const usage: Record<string, { id: string; name: string }[]> = {};
   let dbError = false;
   try {
     const rows = await getPrisma().themePackage.findMany({
       orderBy: [{ themeId: 'asc' }, { createdAt: 'desc' }],
     });
+    const using = await getPrisma().site.findMany({
+      where: { themeId: { startsWith: 'package:' } },
+      select: { id: true, name: true, themeId: true },
+    });
+    for (const site of using) {
+      const id = site.themeId.slice('package:'.length);
+      (usage[id] ??= []).push({ id: site.id, name: site.name });
+    }
     const seen = new Set<string>();
     for (const row of rows) {
       if (row.status === 'CURRENT' && !seen.has(row.themeId)) {
@@ -68,7 +77,12 @@ export default async function ThemeLibraryPage() {
               </div>
             ) : (
               themes.map((theme) => (
-                <InstalledThemeCard key={theme.themeId} theme={theme} archivedVersions={archived[theme.themeId] ?? []} />
+                <InstalledThemeCard
+                  key={theme.themeId}
+                  theme={theme}
+                  archivedVersions={archived[theme.themeId] ?? []}
+                  usedBy={usage[theme.themeId] ?? []}
+                />
               ))
             )}
           </section>

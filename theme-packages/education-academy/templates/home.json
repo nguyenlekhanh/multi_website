@@ -1,0 +1,15 @@
+{
+  "route": "home",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

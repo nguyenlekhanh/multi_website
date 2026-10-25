@@ -1,0 +1,6 @@
+/* Hotel Luxury - restrained spacing, hairline dividers, elegant caps */
+main > section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+@media (min-width: 640px) { main > section { padding-top: 5rem; padding-bottom: 5rem; } }
+section + section { border-top: 1px solid rgba(0,0,0,0.05); }
+h1, h2 { font-weight: 600; letter-spacing: 0.01em; }
+main img { border-radius: 0.75rem; }

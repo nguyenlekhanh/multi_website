@@ -1,0 +1,5 @@
+/* Restaurant Bistro - warm surfaces, soft shadows */
+main > section { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 640px) { main > section { padding-top: 4.5rem; padding-bottom: 4.5rem; } }
+a.group { box-shadow: 0 6px 18px rgba(28,20,12,0.10); transition: box-shadow .3s ease; }
+a.group:hover { box-shadow: 0 12px 28px rgba(28,20,12,0.18); }

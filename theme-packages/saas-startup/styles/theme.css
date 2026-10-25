@@ -1,0 +1,6 @@
+/* SaaS Startup - crisp cards, bouncy hovers, tight headings */
+main > section { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 640px) { main > section { padding-top: 4.5rem; padding-bottom: 4.5rem; } }
+h1, h2, h3 { letter-spacing: -0.02em; }
+a.group { transition: transform .2s ease, box-shadow .2s ease; }
+a.group:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,0.10); }

@@ -1,0 +1,65 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "education-academy",
+  "name": "Education Academy",
+  "version": "1.0.0",
+  "description": "Training-academy design: program hero, course cards, learning-benefit features, outcome statistics, and an enrolment CTA.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "course-cards",
+    "enrolment-cta"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "nav-cta",
+      "sticky": true,
+      "ctaLabel": "Enrol now",
+      "ctaHref": "/contact"
+    },
+    "footer": {
+      "variant": "columns",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "sans",
+      "bodyFont": "sans"
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}

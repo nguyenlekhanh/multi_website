@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cta",
+        "heading": "Join the next cohort",
+        "body": "Applications are reviewed weekly. Ask us anything.",
+        "buttonLabel": "Request the syllabus",
+        "buttonHref": "/contact"
+      },
+      "variant": "banner"
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

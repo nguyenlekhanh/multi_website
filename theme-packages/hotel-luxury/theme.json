@@ -1,0 +1,63 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "hotel-luxury",
+  "name": "Hotel Luxury",
+  "version": "1.0.0",
+  "description": "Quiet-luxury resort identity: full-bleed imagery, suite and amenity cards, a dark stats band, and concierge contact.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "immersive-hero",
+    "suite-cards"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "logo-left-nav",
+      "sticky": false
+    },
+    "footer": {
+      "variant": "large-brand",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "serif",
+      "bodyFont": "sans"
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}

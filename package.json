@@ -20,7 +20,8 @@
     "ai:test-live": "tsx scripts/test-ollama-live.ts",
     "theme:validate": "tsx scripts/theme-cli.ts validate",
     "theme:pack": "tsx scripts/theme-cli.ts pack",
-    "theme:install": "tsx scripts/theme-cli.ts install"
+    "theme:install": "tsx scripts/theme-cli.ts install",
+    "themes:install-all": "tsx scripts/install-all-themes.mts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

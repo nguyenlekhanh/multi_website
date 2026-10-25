@@ -1,0 +1,62 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "blog-editorial",
+  "name": "Blog Editorial",
+  "version": "1.0.0",
+  "description": "A personal-blog theme with editorial serif typography, a featured essay treatment, and comfortable reading widths.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "reading-width"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "centered",
+      "sticky": false
+    },
+    "footer": {
+      "variant": "minimal",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "serif",
+      "bodyFont": "serif"
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}

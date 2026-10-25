@@ -1,0 +1,63 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "travel-explorer",
+  "name": "Travel Explorer",
+  "version": "1.0.0",
+  "description": "Adventure travel identity with an immersive photo hero, overlay destination cards, and route-style statistics.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "overlay-cards",
+    "immersive-hero"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "logo-left-nav",
+      "sticky": true
+    },
+    "footer": {
+      "variant": "large-brand",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "sans",
+      "bodyFont": "sans"
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}
