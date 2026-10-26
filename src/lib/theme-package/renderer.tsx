@@ -31,7 +31,13 @@ const FONT_CLASS: Record<string, string> = {
   mono: 'font-mono',
 };
 
-type VariantBlockRenderer = (block: Block, variant: string, pkg: ValidatedThemePackage, ctx: SiteContext) => React.ReactNode;
+type VariantBlockRenderer = (
+  block: Block,
+  variant: string,
+  pkg: ValidatedThemePackage,
+  ctx: SiteContext,
+  assetBasePath?: string,
+) => React.ReactNode;
 
 /* --------------------------------- header ---------------------------------- */
 
@@ -194,9 +200,14 @@ function PackageFooter({ ctx, pkg }: { ctx: SiteContext; pkg: ValidatedThemePack
 
 /* ------------------------------ block rendering ----------------------------- */
 
-function assetSrc(pkg: ValidatedThemePackage, image: string | undefined): string | undefined {
+function assetSrc(pkg: ValidatedThemePackage, image: string | undefined, assetBasePath?: string): string | undefined {
   if (!image) return undefined;
-  return image.startsWith('assets/') ? `/api/theme-assets/${pkg.manifest.id}/${encodeURIComponent(image)}` : image;
+  if (!image.startsWith('assets/')) return image;
+  // Installed packages are served by the install store; the Preview Lab
+  // overrides the base so uninstalled packages resolve from its own
+  // authenticated, in-memory asset endpoint.
+  const base = assetBasePath ?? `/api/theme-assets/${pkg.manifest.id}`;
+  return `${base}/${encodeURIComponent(image)}`;
 }
 
 function Section({
@@ -228,8 +239,8 @@ function Section({
   );
 }
 
-const renderBlockByVariant: VariantBlockRenderer = (block, variant, pkg, ctx) => {
-  const image = assetSrc(pkg, 'image' in block ? block.image : undefined);
+const renderBlockByVariant: VariantBlockRenderer = (block, variant, pkg, ctx, assetBasePath) => {
+  const image = assetSrc(pkg, 'image' in block ? block.image : undefined, assetBasePath);
   switch (block.type) {
     case 'hero':
       if (variant === 'overlay') {
@@ -365,7 +376,7 @@ const renderBlockByVariant: VariantBlockRenderer = (block, variant, pkg, ctx) =>
               {block.items.map((item) => {
                 const inner = (
                   <>
-                    <SmartImage src={assetSrc(pkg, item.image)} alt={item.imageAlt ?? item.title} className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-105" />
+                    <SmartImage src={assetSrc(pkg, item.image, assetBasePath)} alt={item.imageAlt ?? item.title} className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-105" />
                     <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
                     {item.tag && <span className="absolute right-4 top-4 rounded-full t-bg-primary px-3 py-1 text-xs font-bold">{item.tag}</span>}
                     <div className="relative mt-auto p-5 text-white">
@@ -391,7 +402,7 @@ const renderBlockByVariant: VariantBlockRenderer = (block, variant, pkg, ctx) =>
             <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {block.items.map((item) => (
                 <div key={item.title} className="border-b t-border pb-6">
-                  {item.image && <SmartImage src={assetSrc(pkg, item.image)} alt={item.imageAlt ?? item.title} className="aspect-[4/3] w-full rounded-lg" />}
+                  {item.image && <SmartImage src={assetSrc(pkg, item.image, assetBasePath)} alt={item.imageAlt ?? item.title} className="aspect-[4/3] w-full rounded-lg" />}
                   <h3 className="mt-3 text-lg font-semibold">{item.title}</h3>
                   {item.description && <p className="mt-1.5 text-sm t-text-muted">{item.description}</p>}
                 </div>
@@ -407,7 +418,7 @@ const renderBlockByVariant: VariantBlockRenderer = (block, variant, pkg, ctx) =>
             {block.items.map((item) => {
               const inner = (
                 <>
-                  {item.image && <SmartImage src={assetSrc(pkg, item.image)} alt={item.imageAlt ?? item.title} className="aspect-[4/3] w-full" />}
+                  {item.image && <SmartImage src={assetSrc(pkg, item.image, assetBasePath)} alt={item.imageAlt ?? item.title} className="aspect-[4/3] w-full" />}
                   <div className="p-5">
                     {item.tag && <span className="t-bg-accent-soft t-text-accent rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide">{item.tag}</span>}
                     <h3 className="mt-2 text-lg font-semibold">{item.title}</h3>
@@ -560,6 +571,7 @@ function renderSections(
   posts?: Post[],
   categories?: CategoryWithCount[],
   page?: Page,
+  assetBasePath?: string,
 ): React.ReactNode {
   const width = template.options.containerWidth === 'narrow' ? 'max-w-3xl' : template.options.containerWidth === 'wide' ? 'max-w-7xl' : 'max-w-6xl';
 
@@ -585,7 +597,7 @@ function renderSections(
                 block.type === 'postlist' ? (
                   <PostListView key={i} block={block} posts={posts} template={template} />
                 ) : (
-                  <div key={i}>{renderBlockByVariant(block, 'split', pkg, ctx)}</div>
+                  <div key={i}>{renderBlockByVariant(block, 'split', pkg, ctx, assetBasePath)}</div>
                 ),
               )
             )}
@@ -598,7 +610,7 @@ function renderSections(
     if (block.type === 'postlist') {
       return <div key={`s-${index}`}><PostListView block={block} posts={posts} template={template} /></div>;
     }
-    return <div key={`s-${index}`}>{renderBlockByVariant(block, section.variant ?? 'split', pkg, ctx)}</div>;
+    return <div key={`s-${index}`}>{renderBlockByVariant(block, section.variant ?? 'split', pkg, ctx, assetBasePath)}</div>;
   });
 }
 
@@ -666,8 +678,14 @@ function ThemeScopedStyle({ pkg }: { pkg: ValidatedThemePackage }) {
   return <style dangerouslySetInnerHTML={{ __html: pkg.css }} />;
 }
 
-export function packageThemeDefinition(pkg: ValidatedThemePackage): ThemeDefinition {
+export interface PackageThemeOptions {
+  /** Base URL that resolves `assets/…` references (defaults to the installed-package route). */
+  assetBasePath?: string;
+}
+
+export function packageThemeDefinition(pkg: ValidatedThemePackage, options?: PackageThemeOptions): ThemeDefinition {
   const { manifest, templates } = pkg;
+  const assetBasePath = options?.assetBasePath;
   const layout = manifest.layout;
   const headingClass = FONT_CLASS[layout.typography.headingFont] ?? 'font-sans';
   const bodyClass = FONT_CLASS[layout.typography.bodyFont] ?? 'font-sans';
@@ -689,7 +707,7 @@ export function packageThemeDefinition(pkg: ValidatedThemePackage): ThemeDefinit
     posts?: Post[],
     categories?: CategoryWithCount[],
     page?: Page,
-  ) => shell(ctx, renderSections(templates[route], pkg, ctx, cmsBlocks, posts, categories, page));
+  ) => shell(ctx, renderSections(templates[route], pkg, ctx, cmsBlocks, posts, categories, page, assetBasePath));
 
   return {
     id: `${manifest.id}`,

@@ -8,7 +8,8 @@ const links = [
   { href: '/admin', label: 'Overview', exact: true },
   { href: '/admin/sites', label: 'Websites', exact: false },
   { href: '/admin/ai', label: 'AI automation', exact: false },
-  { href: '/admin/themes', label: 'Theme library', exact: false },
+  { href: '/admin/themes', label: 'Theme library', exact: true },
+  { href: '/admin/themes/lab', label: 'Preview lab', exact: false },
   { href: '/admin/audit', label: 'Audit log', exact: false },
 ];
 

@@ -21,6 +21,7 @@
     "theme:validate": "tsx scripts/theme-cli.ts validate",
     "theme:pack": "tsx scripts/theme-cli.ts pack",
     "theme:install": "tsx scripts/theme-cli.ts install",
+    "theme:new": "tsx scripts/theme-new.ts",
     "themes:install-all": "tsx scripts/install-all-themes.mts"
   },
   "prisma": {

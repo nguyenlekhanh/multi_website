@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getPrisma } from '@/platform/data/prisma';
 import { isDataUnavailableError } from '@/platform/data/errors';
 import { requireAdmin } from '@/lib/admin/require-admin';
@@ -59,6 +60,12 @@ export default async function ThemeLibraryPage() {
         <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">Database unavailable.</p>
       ) : (
         <div className="space-y-6">
+          <Link
+            href="/admin/themes/lab"
+            className="block rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-sm font-semibold text-indigo-800 transition hover:border-indigo-300 hover:bg-indigo-100"
+          >
+            Open the Preview Lab → render any theme with demo content, or try a ZIP without installing it.
+          </Link>
           {isSuper && <ThemeUploadForm />}
           {!isSuper && (
             <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm t-text-muted">

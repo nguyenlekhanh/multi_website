@@ -16,6 +16,15 @@ own settings — a good package works unchanged on any tenant.
 
 ## Step 1 — scaffold
 
+The Theme Starter Kit generates a complete, validator-clean starting point:
+
+```bash
+npm run theme:new -- "Coastal Retreat"
+# → theme-packages/coastal-retreat/ (see docs/theme-starter-kit.md)
+```
+
+Alternatively copy the sample package and rename it:
+
 ```bash
 cp -r theme-packages/real-estate-modern theme-packages/<your-theme-id>
 cd theme-packages/<your-theme-id>
@@ -116,6 +125,11 @@ npm run theme:install -- theme-packages/<id>   # local DB, for development
 | Version X already installed | Bump semver, or roll back instead of downgrading. |
 
 ## Testing your theme without installing
+
+Open **Admin → Preview lab** and upload the ZIP (or preview an installed
+package): it renders all four template routes, the full block showcase and —
+for packages — the variant gallery with demo content, without installing or
+activating anything. See [preview-lab.md](preview-lab.md).
 
 The renderer suite in `tests/theme-package-runtime.test.tsx` renders the
 sample package across all routes with fixture data — copy it, point it at

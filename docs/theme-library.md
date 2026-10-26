@@ -4,7 +4,10 @@ The platform ships **7 native themes** (registered React/TypeScript) and
 supports **MSP Theme Packages** — declarative ZIP themes validated and
 rendered by the runtime renderer. Manage packages in **Admin → Theme
 library**; activate any theme (native or package) per website in its
-**Theme** picker.
+**Theme** picker. Before committing to a theme, try it in the
+**[Preview Lab](preview-lab.md)** — including uninstalled ZIPs, with no
+database writes. New packages start from the
+**[Theme Starter Kit](theme-starter-kit.md)** (`npm run theme:new`).
 
 ## Available theme packages
 
