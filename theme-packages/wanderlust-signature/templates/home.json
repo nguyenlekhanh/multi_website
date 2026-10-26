@@ -1,0 +1,167 @@
+{
+  "route": "home",
+  "contentHeader": {
+    "style": "none",
+    "showEyebrow": false
+  },
+  "sections": [
+    {
+      "type": "static",
+      "variant": "overlay",
+      "block": {
+        "type": "hero",
+        "eyebrow": "Wanderlust Signature",
+        "title": "Journeys worth the detour",
+        "subtitle": "Small-group journeys and private itineraries, curated by people who have walked every route they sell.",
+        "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=70",
+        "imageAlt": "Mountain ridge at dusk",
+        "primaryCta": {
+          "label": "Plan your journey",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Browse destinations",
+          "href": "/destinations"
+        }
+      }
+    },
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "variant": "overlay",
+      "block": {
+        "type": "cards",
+        "eyebrow": "Destination discovery",
+        "heading": "Where our travellers go next",
+        "intro": "Three regions our curators know street by street, trail by trail.",
+        "items": [
+          {
+            "title": "The Norwegian Fjords",
+            "description": "Still water, high granite and villages that end at the pier.",
+            "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=70",
+            "imageAlt": "Teal fjord silhouette at dusk",
+            "href": "/destinations",
+            "tag": "Editor's pick",
+            "meta": [
+              "From $2,980",
+              "8 days"
+            ]
+          },
+          {
+            "title": "The Great Dune Sea",
+            "description": "Camel tracks, desert camps and the clearest night sky you will ever see.",
+            "image": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=900&q=70",
+            "imageAlt": "Amber dune ridges at sunset",
+            "href": "/destinations",
+            "meta": [
+              "From $2,240",
+              "6 days"
+            ]
+          },
+          {
+            "title": "The Amber Coast",
+            "description": "Fishing towns, cliff walks and long lunches that turn into dinner.",
+            "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=70",
+            "imageAlt": "Dusty blue coastline with sand ridges",
+            "href": "/destinations",
+            "meta": [
+              "From $1,860",
+              "7 days"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "static",
+      "block": {
+        "type": "cards",
+        "eyebrow": "Signature journeys",
+        "heading": "Curated tours, priced honestly",
+        "intro": "Every departure is led by a local guide and capped at twelve travellers.",
+        "items": [
+          {
+            "title": "High Andes Crossing",
+            "description": "Salt flats, hot springs and colonial towns on the old silver route.",
+            "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=70",
+            "imageAlt": "Violet mountain ridges under a pale sun",
+            "href": "/tours",
+            "tag": "Small group",
+            "meta": [
+              "From $3,450",
+              "12 days",
+              "Guided"
+            ]
+          },
+          {
+            "title": "Kyoto in Mist",
+            "description": "Temple gardens at opening hour and a tea house night in the hills.",
+            "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=70",
+            "imageAlt": "Warm misty ridges in evening light",
+            "href": "/tours",
+            "tag": "Seasonal",
+            "meta": [
+              "From $4,120",
+              "9 days",
+              "Guided"
+            ]
+          },
+          {
+            "title": "Lisbon & the Alentejo",
+            "description": "Tiled lanes, vineyard lunches and a coast road built for stopping.",
+            "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=70",
+            "imageAlt": "Golden hills above the coastline",
+            "href": "/tours",
+            "tag": "New route",
+            "meta": [
+              "From $1,940",
+              "8 days",
+              "Self-drive"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "static",
+      "variant": "band",
+      "block": {
+        "type": "stats",
+        "items": [
+          {
+            "value": "52",
+            "label": "Countries scouted"
+          },
+          {
+            "value": "14",
+            "label": "Years of curating"
+          },
+          {
+            "value": "12",
+            "label": "Travellers per departure, maximum"
+          },
+          {
+            "value": "98%",
+            "label": "Would travel with us again"
+          }
+        ]
+      }
+    },
+    {
+      "type": "static",
+      "variant": "banner",
+      "block": {
+        "type": "cta",
+        "heading": "Begin your next story",
+        "body": "Tell us where you have always meant to go. A curator replies within one business day with an honest first draft.",
+        "buttonLabel": "Plan your journey",
+        "buttonHref": "/contact"
+      }
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

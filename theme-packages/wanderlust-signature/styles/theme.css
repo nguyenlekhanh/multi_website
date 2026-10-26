@@ -1,0 +1,48 @@
+/* Wanderlust Signature — editorial travel polish.
+   Scoped automatically to .msp-theme-wanderlust-signature by the platform.
+   Rules honored: no @import, no url(), no position: fixed. */
+
+/* Generous editorial rhythm */
+main > section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+@media (min-width: 640px) {
+  main > section { padding-top: 5.5rem; padding-bottom: 5.5rem; }
+}
+
+/* Serif display headings sit a touch tighter */
+h1, h2, h3 { letter-spacing: -0.015em; }
+
+/* Photography: soft rounded corners, but never on full-bleed artwork */
+main img { border-radius: 0.75rem; }
+main .absolute img { border-radius: 0; }
+
+/* Quiet hairlines between sections */
+main > section + section { border-top: 1px solid var(--c-border); }
+
+/* Cards: lift gently, shadow like paper, settle like print */
+a.group { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+a.group:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12); }
+
+/* Testimonials read as printed pull-quotes */
+main figure { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+main figure blockquote { font-size: 1.02rem; }
+
+/* Journal index: airy list rows */
+main section .divide-y > * { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+
+/* Article: a serif drop cap opens the story */
+article .max-w-2xl > p:first-child::first-letter {
+  float: left;
+  font-size: 3.2em;
+  line-height: 0.85;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  font-weight: 700;
+  color: var(--c-primary);
+}
+
+/* Buttons: restrained motion */
+main a[class*="t-btn"], main a[class*="rounded-lg"] { transition: filter 0.2s ease, transform 0.15s ease; }
+main a[class*="t-btn"]:hover, main a[class*="rounded-lg"]:hover { filter: brightness(1.06); }
+
+/* Selection tinted with the site palette */
+::selection { background: var(--c-primary); color: var(--c-primary-fg); }

@@ -1,0 +1,64 @@
+{
+  "format": "msp-theme",
+  "formatVersion": 1,
+  "id": "wanderlust-signature",
+  "name": "Wanderlust Signature",
+  "version": "0.2.0",
+  "description": "Premium editorial travel and destination discovery: curated journeys, guided tours and refined storytelling.",
+  "author": {
+    "name": "Platform Team",
+    "url": "https://example.com"
+  },
+  "preview": "assets/preview.png",
+  "compatibility": {
+    "platform": "1"
+  },
+  "features": [
+    "responsive",
+    "post-list",
+    "post-detail",
+    "seo",
+    "curated-editorial",
+    "local-assets"
+  ],
+  "supportedBlocks": [
+    "hero",
+    "intro",
+    "features",
+    "cards",
+    "stats",
+    "testimonials",
+    "richtext",
+    "logos",
+    "cta",
+    "contact",
+    "postlist"
+  ],
+  "entry": {
+    "templates": {
+      "home": "templates/home.json",
+      "page": "templates/page.json",
+      "postList": "templates/post-list.json",
+      "post": "templates/post.json"
+    },
+    "styles": "styles/theme.css"
+  },
+  "layout": {
+    "header": {
+      "variant": "centered",
+      "sticky": true
+    },
+    "footer": {
+      "variant": "columns",
+      "showTagline": true
+    },
+    "typography": {
+      "headingFont": "serif",
+      "bodyFont": "sans",
+      "displayScale": 1.25
+    },
+    "colors": {
+      "mode": "brand"
+    }
+  }
+}

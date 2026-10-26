@@ -113,7 +113,7 @@ describe('preview store (uninstalled packages)', () => {
 describe('preview store accepts every installed package', () => {
   const THEME_IDS = [
     'real-estate-modern', 'blog-editorial', 'travel-explorer', 'restaurant-bistro',
-    'hotel-luxury', 'education-academy', 'saas-startup',
+    'hotel-luxury', 'education-academy', 'saas-startup', 'wanderlust-signature',
   ];
 
   for (const id of THEME_IDS) {
@@ -170,7 +170,7 @@ describe('block gallery package', () => {
 });
 
 describe('lab fixtures render every installed package across all four routes', () => {
-  const THEME_IDS = ['real-estate-modern', 'saas-startup'] as const;
+  const THEME_IDS = ['real-estate-modern', 'saas-startup', 'wanderlust-signature'] as const;
   const ctx = demoSiteContext('package:real-estate-modern');
   const posts = demoPosts();
   const categories = demoCategories();

@@ -1,0 +1,26 @@
+{
+  "route": "page",
+  "contentHeader": {
+    "style": "band",
+    "showEyebrow": true
+  },
+  "sections": [
+    {
+      "type": "content"
+    },
+    {
+      "type": "static",
+      "variant": "panel",
+      "block": {
+        "type": "cta",
+        "heading": "Every itinerary starts with a conversation",
+        "body": "Tell a curator where you have always meant to go — the first draft is honest and free.",
+        "buttonLabel": "Contact us",
+        "buttonHref": "/contact"
+      }
+    }
+  ],
+  "options": {
+    "containerWidth": "normal"
+  }
+}

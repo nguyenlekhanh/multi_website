@@ -16,12 +16,10 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     testTimeout: 30000,
     hookTimeout: 120000,
-    // Keep every Prisma pool small: the local verification database runs
-    // with a tight connection budget.
-    poolOptions: {
-      threads: {
-        singleThread: true,
-      },
-    },
+    // The integration suites share one verification database — several of
+    // them wipe and reseed it (postgres-adapter) or manage fixture rows
+    // (content-service, phase8) — so test FILES must never run in parallel.
+    // (Vitest 4 removed poolOptions; this is its supported replacement.)
+    fileParallelism: false,
   },
 });

@@ -28,7 +28,13 @@ export interface PreviewEntry {
 const TTL_MS = 30 * 60 * 1000;
 const MAX_ENTRIES = 8;
 
-const entries = new Map<string, PreviewEntry>();
+/**
+ * The store lives on globalThis: Next.js bundles route handlers separately
+ * from pages/server actions, and each bundle would otherwise get its own
+ * module instance (and its own empty map). One process, one store.
+ */
+const globalStore = globalThis as { __mspThemePreviewStore?: Map<string, PreviewEntry> };
+const entries = (globalStore.__mspThemePreviewStore ??= new Map<string, PreviewEntry>());
 
 function purgeExpired(now: number): void {
   for (const [token, entry] of entries) {
